@@ -1,0 +1,12 @@
+5 6
+W M A R E A
+F U S C A W
+P G T E L S
+C O R S A X
+G L A T B J
+5
+MAREA
+FUSCA
+ASTRA
+CORSA
+GOL

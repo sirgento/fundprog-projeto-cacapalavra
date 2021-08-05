@@ -1,0 +1,28 @@
+# Linhas marcadas com # serão ignoradas no código
+# Para usar este arquivo, altere os números da linha abaixo
+# de acordo com a quantidade de linhas e colunas que você vá
+# querer usar:
+#
+5 6
+#
+# Então, adicione a sua grade do caça-palavras:
+#
+M E L A O Z
+S R Q M V X
+L O W O Q U
+O M S R A V
+B A N A N A
+#
+# Em seguida, a quantidade de palavras a serem procuradas
+# e as palavras, uma por linha:
+#
+5
+#
+MELAO
+ROMA
+AMORA
+UVA
+BANANA
+#
+# Salve este arquivo editado com um nome qualquer, e o use
+# como parâmetro ao rodar o código.

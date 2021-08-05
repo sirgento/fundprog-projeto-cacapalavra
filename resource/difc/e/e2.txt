@@ -1,0 +1,12 @@
+5 6
+D A R L C J
+V T U G O V
+E L S M B S
+P Y T H O N
+W M S Q L Z
+5
+PYTHON
+COBOL
+RUST
+SQL
+GO
