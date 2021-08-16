@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 /**
  * @function Reads a string into a given variable
@@ -23,4 +25,14 @@ bool charIn(char param, char tgt[], int size) {
 		if (param == tgt[i]) return true;
 	}
 	return false;
+}
+
+/**
+ * @function Generates a random number within a closed set
+ * @param min, max, self-expalining.
+ * @return the generated random
+ * */
+int randomIntInterval(int min, int max) {
+	srand(time(NULL));
+	return ((rand() % max) + min);
 }

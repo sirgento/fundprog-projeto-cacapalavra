@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
 	 * que o usuário quer jogar. Além disso, define o output padrão.
 	 * * */
 	else if (argc < 3) {
+		strcpy(outputFile, "./default-output.txt");
 		switch (argc) {
 			/**
 			 * Caso nada tenha sido informado
@@ -36,19 +37,24 @@ int main(int argc, char **argv) {
 				} while (!charIn(dif, "FfMmDd", 6));
 				
 				strcpy(inputFile, "./resource/difc/");
-				
+				char p[2];
+				int i = randomIntInterval(1,3);
+				itoa(i, p, 10);
 				switch(dif) {
 					case 'F':
 					case 'f': 
-					//	strcat(inputFile, "e/e%d", randomIntInterval(1,3));
+						strcat(inputFile, "e/e");
+						strcat(inputFile, p);
 						break;
 					case 'M':
 					case 'm':
-					//	strcat(inputFile, "m/m%d", randomIntInterval(1,3));
+						strcat(inputFile, "m/m");
+						strcat(inputFile, p);
 						break;
 					case 'D':
 					case 'd': 
-					//	strcat(inputFile, "h/h%d", randomIntInterval(1,3));
+						strcat(inputFile, "h/h");
+						strcat(inputFile, p);
 						break;
 				}
 				break;
@@ -66,6 +72,6 @@ int main(int argc, char **argv) {
 		strcpy(inputFile, argv[1]);
 		strcpy(outputFile, argv[2]);
 	}
-	printf("%s\n", argv[0]);
+	printf("%s\n%s\n%s\n", argv[0], inputFile, outputFile);
 	return 0;
 }
