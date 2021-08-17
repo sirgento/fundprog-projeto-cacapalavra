@@ -4,10 +4,14 @@
 #include <stdbool.h>
 #include "./resource/headers/funcoes.h"
 #include "./resource/headers/typedefs.h"
+#include "./resource/function/stackoverflow.h"
 
 int main(int argc, char **argv) {
 	setlocale(LC_ALL, " ");
 	String inputFile, outputFile;
+	FILE *iFile;
+	FILE *oFile;
+	bool stopar = false;
 	/**
 	 * Interrompe a execução do programa caso tenham sido passados
 	 * parâmetros demais. Exibe uma mensagem solicitando que 
@@ -39,7 +43,7 @@ int main(int argc, char **argv) {
 				strcpy(inputFile, "./resource/difc/");
 				char p[2];
 				int i = randomIntInterval(1,3);
-				itoa(i, p, 10);
+				itoarr(i, p);
 				switch(dif) {
 					case 'F':
 					case 'f': 
@@ -57,6 +61,7 @@ int main(int argc, char **argv) {
 						strcat(inputFile, p);
 						break;
 				}
+				strcat(inputFile, ".txt");
 				break;
 			/**
 			 * Caso tenha sido informado apenas o arquivo de entrada
@@ -72,6 +77,25 @@ int main(int argc, char **argv) {
 		strcpy(inputFile, argv[1]);
 		strcpy(outputFile, argv[2]);
 	}
+	/**
+	 * Printa o nome dos arquivos a título de debug.
+	 * * */
 	printf("%s\n%s\n%s\n", argv[0], inputFile, outputFile);
+	
+	iFile = fopen(inputFile, "r");
+	oFile = fopen(outputFile, "w+");
+	
+	if (iFile == NULL) {
+		printf("NULL_POINTER: Arquivo de entrada nulo!\n");
+		stopar = true;
+	}
+	if (oFile == NULL) {
+		printf("NULL_POINTER: Arquivo de saída nulo!\n");
+		stopar = true;
+	}
+	/**
+	 * Para a execução do código mediante exception.
+	 * * */
+	if (stopar) return -1;
 	return 0;
 }
