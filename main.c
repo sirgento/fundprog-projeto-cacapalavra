@@ -82,6 +82,9 @@ int main(int argc, char **argv) {
 	 * * */
 	printf("%s\n%s\n%s\n", argv[0], inputFile, outputFile);
 	
+	/**
+	 * Tenta abrir os arquivos
+	 * * */
 	iFile = fopen(inputFile, "r");
 	oFile = fopen(outputFile, "w+");
 	
