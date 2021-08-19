@@ -4,14 +4,14 @@
 #include <stdbool.h>
 #include "./resource/headers/funcoes.h"
 #include "./resource/headers/typedefs.h"
+#include "./resource/function/filemanager.h"
 #include "./resource/function/stackoverflow.h"
+
+void doGame(String, String);
 
 int main(int argc, char **argv) {
 	setlocale(LC_ALL, " ");
 	String inputFile, outputFile;
-	FILE *iFile;
-	FILE *oFile;
-	bool stopar = false;
 	/**
 	 * Interrompe a execução do programa caso tenham sido passados
 	 * parâmetros demais. Exibe uma mensagem solicitando que 
@@ -82,23 +82,42 @@ int main(int argc, char **argv) {
 	 * * */
 	printf("%s\n%s\n%s\n", argv[0], inputFile, outputFile);
 	
+	doGame(inputFile, outputFile);
+	
+	return 0;
+}
+
+void doGame(String input, String output) {
+
+	FILE *iFile;
+	FILE *oFile;
+
+	bool stopar = false;
+	int altura, largura;
+	char **matriz;
+	
 	/**
-	 * Tenta abrir os arquivos
+	 * Tenta abrir os arquivos. Para o código mediante exception.
 	 * * */
-	iFile = fopen(inputFile, "r");
-	oFile = fopen(outputFile, "w+");
+	iFile = fopen(input, "r");
+	oFile = fopen(output, "w+");
 	
 	if (iFile == NULL) {
 		printf("NULL_POINTER: Arquivo de entrada nulo!\n");
-		stopar = true;
+		return;
 	}
 	if (oFile == NULL) {
 		printf("NULL_POINTER: Arquivo de saída nulo!\n");
-		stopar = true;
+		return;
 	}
-	/**
-	 * Para a execução do código mediante exception.
-	 * * */
-	if (stopar) return -1;
-	return 0;
+	
+	criarMatrizArquivo(iFile, matriz);
 }
+
+
+
+
+
+
+
+
