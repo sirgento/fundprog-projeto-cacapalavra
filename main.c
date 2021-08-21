@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include "./resource/headers/funcoes.h"
 #include "./resource/headers/typedefs.h"
-#include "./resource/function/filemanager.h"
 #include "./resource/function/stackoverflow.h"
+#include "./resource/function/filemanager.h"
 
 void doGame(String, String);
 
@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
 	/**
 	 * Printa o nome dos arquivos a título de debug.
 	 * * */
-	printf("%s\n%s\n%s\n", argv[0], inputFile, outputFile);
+//	printf("%s\n%s\n%s\n", argv[0], inputFile, outputFile);
 	
 	doGame(inputFile, outputFile);
 	
@@ -112,6 +112,13 @@ void doGame(String input, String output) {
 	}
 	
 	criarMatrizArquivo(iFile, matriz);
+	
+	for (int i = 0; i < altura; i++) {
+		for (int j = 0; j < largura; j++) {
+			printf("%c ", matriz[i][j]);
+		}
+		printf("\n");
+	}
 }
 
 

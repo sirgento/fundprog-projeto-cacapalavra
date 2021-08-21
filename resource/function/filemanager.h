@@ -24,7 +24,7 @@ void criarMatrizArquivo(FILE *arq, char **matriz) {
 	while (true) {
 		fgets(st, 128, arq);
 		if (!charIn('#', st, 2))
-			printf("%s", st);
+//			printf("%s", st);
 			break;
 	}
 	
@@ -40,7 +40,7 @@ void criarMatrizArquivo(FILE *arq, char **matriz) {
 	altura = atoi(tamanhos[0]);
 	largura = atoi(tamanhos[1]);
 	
-	printf("Altura = %d, largura = %d\n", altura, largura);
+//	printf("Altura = %d, largura = %d\n", altura, largura);
 	
 	/**
 	 * Inicializa a matriz como nula.
@@ -51,31 +51,43 @@ void criarMatrizArquivo(FILE *arq, char **matriz) {
 	for (int i = 0; i < altura; i++) {
 		matriz[i] = (char *) malloc(largura * sizeof(char));
 	}
-	printf("%d, %d\n",tamanhoAtual, sizeof(matriz));
+//	printf("%d, %d\n",tamanhoAtual, sizeof(matriz));
 	
 	/**
 	 * Percorre o arquivo e monta o array em memória
 	 * * */
 	for (int i = 0; i < altura; i++) {
-//		fgets(st, 128, arq);
-//		if (feof(arq)) 
-//			break;
+		int contagem = 0;
+		fgets(st, 128, arq);
+		if (feof(arq)) 
+			break;
 //		printf("%s", st);
 		for (int j = 0; j < largura; j++) {
-//			for (int k = 0; (st[k] != '\n' && st[k] != '\0'); k++) {
+			int k = j + contagem;
+			while (st[k] != '\n' && st[k] != '\0') {
 //			printf("%c", st[k]);
-//				if (st[k] != ' ')
-//					matriz[i][j] = st[k];
-			if (i % 2 == 0)
-				matriz[i][j] = (char) (65 + i + j);
-			else
-				matriz[i][j] = (char) (97 + i + j);
-//			}
+				if (st[k] == ' ') {
+					k++;
+					continue;
+				} else {
+//					if (j == 0) 
+						matriz[i][j] = st[k];
+//					else
+//						matriz[i][j] = st[k + count];
+//					k++;
+					break;
+				}
+//			if (i % 2 == 0)
+//				matriz[i][j] = (char) (65 + i + j);
+//			else
+//				matriz[i][j] = (char) (97 + i + j);
+			}
+			contagem++;
 		}
 	}
 	for (int i = 0; i < altura; i++) {
 		for (int j = 0; j < largura; j++) {
-			printf("%c", matriz[i][j]);
+			printf("%c ", matriz[i][j]);
 		}
 		printf("\n");
 	}
