@@ -93,8 +93,11 @@ void doGame(String input, String output) {
 	FILE *oFile;
 
 	bool stopar = false;
-	int altura, largura;
+	int altura = 0;
+	int largura = 0;
+	int quantidadePalavras = 0;
 	char **matriz;
+	char **palavrasValidas;
 	
 	/**
 	 * Tenta abrir os arquivos. Para o código mediante exception.
@@ -111,19 +114,57 @@ void doGame(String input, String output) {
 		return;
 	}
 	
-	criarMatrizArquivo(iFile, matriz);
+	obterTamanhosLinhas(iFile, &altura, &largura);
+//	printf("%d %d\n", altura, largura);
+	
+	/**
+	 * Inicializa a matriz.
+	 * * */
+	matriz = (char **) malloc(altura * sizeof(char *));
+	for (int i = 0; i < altura; i++) {
+		matriz[i] = (char *) malloc(largura * sizeof(char));
+	}
+	
+	criarMatrizArquivo(iFile, matriz, altura, largura);
+	/**
+	 * Obtém a quantidade de Palavras.
+	 * * */
+	quantidadePalavras = obterQuantidadesPalavras(iFile);
+	printf("\nAtenção! O sistema diferencia entre letras maiúsculas e minúsculas!\nPalavras a encontrar: %d\n", quantidadePalavras);
+	
+	printf("Seu desafio: \n\n");
 	
 	for (int i = 0; i < altura; i++) {
 		for (int j = 0; j < largura; j++) {
+//			printf("%d %d ", i, j);
 			printf("%c ", matriz[i][j]);
 		}
 		printf("\n");
 	}
+	
+	/**
+	 * Inicializa a matriz Palavras.
+	 * Utiliza String = char[64] para ter certeza
+	 * * */
+	palavrasValidas = (char **) malloc(quantidadePalavras * sizeof(char *));
+	for (int i = 0; i < quantidadePalavras; i++) {
+		palavrasValidas[i] = (char *) malloc(64 * sizeof(char));
+	}
+
+	criarMatrizPalavras(iFile, palavrasValidas, quantidadePalavras);
+	
+	printf("\nFormatos de entrada válidos(exemplos):\n");
+	printf("\n* * * * *   * * *\n* P R G *   * P *\n* * * * *   * R *\n");
+	printf("            * G *\n            * * *\n");
+	
+	for (int i = 0; i < quantidadePalavras; i++) {
+//		printf("%s\n", palavrasValidas[i]);
+	}
+
+	do {
+		return;
+	} while(true);
 }
-
-
-
-
 
 
 
