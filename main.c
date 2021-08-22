@@ -6,6 +6,7 @@
 #include "./resource/headers/typedefs.h"
 #include "./resource/function/stackoverflow.h"
 #include "./resource/function/filemanager.h"
+#include "./resource/function/game.h"
 
 void doGame(String, String);
 
@@ -155,13 +156,14 @@ void doGame(String input, String output) {
 	
 	printf("\nFormatos de entrada válidos(exemplos):\n");
 	printf("\n* * * * *   * * *\n* P R G *   * P *\n* * * * *   * R *\n");
-	printf("            * G *\n            * * *\n");
+	printf("            * G *\n            * * *\n\n");
 	
 	for (int i = 0; i < quantidadePalavras; i++) {
-//		printf("%s\n", palavrasValidas[i]);
+		printf("%s\n", palavrasValidas[i]);
 	}
 
 	do {
+		jogar();
 		return;
 	} while(true);
 }
