@@ -37,9 +37,9 @@ int main(int argc, char **argv) {
 				char dif = ' ';
 				printf("Caça-palavras v.0.1.\n");
 				do {
-				printf("Dificuldade a jogar: (F)ácil, (M)édio, (D)ifícil: ");
+				printf("Dificuldade a jogar: (F)ácil, (D)ifícil: ");
 				scanf(" %c", &dif);
-				} while (!charIn(dif, "FfMmDd", 6));
+				} while (!charIn(dif, "FfDd", 4));
 				
 				strcpy(inputFile, "./resource/difc/");
 				char p[2];
@@ -49,11 +49,6 @@ int main(int argc, char **argv) {
 					case 'F':
 					case 'f': 
 						strcat(inputFile, "e/e");
-						strcat(inputFile, p);
-						break;
-					case 'M':
-					case 'm':
-						strcat(inputFile, "m/m");
 						strcat(inputFile, p);
 						break;
 					case 'D':
@@ -163,7 +158,7 @@ void doGame(String input, String output) {
 	}
 
 	do {
-		jogar();
+		jogar(oFile, matriz, palavrasValidas, altura, largura, quantidadePalavras);
 		return;
 	} while(true);
 }
