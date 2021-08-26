@@ -89,7 +89,8 @@ void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, 
 			 * * */
 			matrizEntrada[i][largura] = 0;
 		}
-//		for (int x = 0; x < altura; x++)
+		for (int x = 0; x < altura; x++)
+			fprintf(out, "Entrada do jogador: linha %d: %s\n", (x + 1), matrizEntrada[x]);
 //			printf("%s\n", matrizEntrada[x]);
 
 		bool achouHorizontal = false;
@@ -100,16 +101,17 @@ void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, 
 		for (int i = 0; i < altura; i++) {
 			strcpy(stringParaCompararH, matrizEntrada[i]);
 			stringParaCompararH[largura] = 0;
-			printf("%s\n", stringParaCompararH);
+//			printf("%s\n", stringParaCompararH);
 			int contagemLetras = 0;
 			for (int n = 0; n < largura; n++) {
 				if (!charIn(stringParaCompararH[n], ". *", 3))
 				contagemLetras++;
 			}
-			if (contagemLetras < 2) break;
+			if (contagemLetras == 1) break;
 			if (compararStrings(desafio[i], stringParaCompararH, largura)) {
 				limparString(stringParaCompararH, largura);
 				printf("Parabéns! Você achou a palavra %s!\n", stringParaCompararH);
+				fprintf(out, "Palavra encontrada: %s\n", stringParaCompararH);
 				removerStringEncontrada(stringParaCompararH, palavras, altura, largura);
 				achouHorizontal = true; 
 				qtdPalavras--;
@@ -117,52 +119,39 @@ void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, 
 			}
 //			printf("\n");
 		}
-		/** TODO ajustar as matriz como char array[altura]
+		/**
 		 * Comparação vertical é feita mediante condição, pois é mais intenso o requisito de processamento
 		 * 100% sincero, não joguei isso pra uma função separada por um misto de "em cima da hora" e "preguiça"
 		 * * */
 		if (!achouHorizontal) {
 			char stringParaCompararV[] = "";
+			char stringComparacao[altura];
+			char desafioComparacao[altura];
 			char matrizInversa[largura][altura];
 			char desafioInversa[largura][altura];
 			/**
 			 * Inverte as matrizes
 			 * * */
 			for (int j = 0; j < largura; j++) {
-				for (int i = 0; i <= altura; i++) {
-					if (i == altura) {
-						matrizInversa[j][i] = 0;
-						desafioInversa[j][i] = 0;
-					} else {
-						matrizInversa[j][i] = matrizEntrada[i][j];
-						desafioInversa[j][i] = desafio[i][j];
-					}
+				for (int i = 0; i < altura; i++) {
+					matrizInversa[j][i] = matrizEntrada[i][j];
+					desafioInversa[j][i] = desafio[i][j];
 				}
 			}
 			for (int i = 0; i < largura; i++) {
-				matrizInversa[i][altura] = 0;
-				desafioInversa[i][altura] = 0;
-			}
-			for (int i = 0; i < largura; i++) {
-				printf("%s\n", matrizInversa[i]);
-			}
-			for (int i = 0; i < largura; i++) {
-				printf("%s\n", desafioInversa[i]);
-			}
-			for (int i = 0; i < largura; i++) {
-				strcpy(stringParaCompararV, matrizEntrada[i]);
-				stringParaCompararV[altura] = 0;
-				printf("%s\n", stringParaCompararV);
-				int contagemLetras = 0;
-				for (int n = 0; n < altura; n++) {
-					if (!charIn(stringParaCompararV[n], ". *", 3))
-					contagemLetras++;
+				for (int j = 0; j < altura; j++) {
+					stringComparacao[j] = matrizInversa[i][j];
+					desafioComparacao[j] = desafioInversa[i][j];
 				}
-				if (contagemLetras < 2) break;
-				if (compararStrings(desafioInversa[i], stringParaCompararV, altura)) {
-					limparString(stringParaCompararV, altura);
-					printf("Parabéns! Você achou a palavra %s!\n", stringParaCompararV);
-					removerStringEncontrada(stringParaCompararV, palavras, altura, largura);
+				stringComparacao[altura] = 0;
+				desafioComparacao[altura] = 0;
+//				printf("%s\n", stringComparacao);
+//				printf("%s\n", desafioComparacao);
+				if (compararStrings(desafioComparacao, stringComparacao, altura)) {
+					limparString(stringComparacao, altura);
+					printf("Parabéns! Você achou a palavra %s!\n", stringComparacao);
+					fprintf(out, "Palavra encontrada: %s\n", stringComparacao);
+					removerStringEncontrada(stringComparacao, palavras, altura, largura);
 					qtdPalavras--;
 					break;
 				}
@@ -172,5 +161,5 @@ void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, 
 //		break;
 		printf("Palavras restantes: %d\n", qtdPalavras);
 	} while (qtdPalavras > 0);
-	
+	printf("\nParabéns! Você venceu!\n");
 }

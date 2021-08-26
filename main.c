@@ -129,13 +129,16 @@ void doGame(String input, String output) {
 	printf("\nAtenção! O sistema diferencia entre letras maiúsculas e minúsculas!\nPalavras a encontrar: %d\n", quantidadePalavras);
 	
 	printf("Seu desafio: \n\n");
+	fprintf(oFile, "Desafio: \n");
 	
 	for (int i = 0; i < altura; i++) {
 		for (int j = 0; j < largura; j++) {
 //			printf("%d %d ", i, j);
 			printf("%c ", matriz[i][j]);
+			fprintf(oFile, "%c ", matriz[i][j]);
 		}
 		printf("\n");
+		fprintf(oFile, "\n");
 	}
 	
 	/**
@@ -153,14 +156,7 @@ void doGame(String input, String output) {
 	printf("\n* * * * *   * * *\n* P R G *   * P *\n* * * * *   * R *\n");
 	printf("            * G *\n            * * *\n\n");
 	
-	for (int i = 0; i < quantidadePalavras; i++) {
-		printf("%s\n", palavrasValidas[i]);
-	}
-
-	do {
-		jogar(oFile, matriz, palavrasValidas, altura, largura, quantidadePalavras);
-		return;
-	} while(true);
+	jogar(oFile, matriz, palavrasValidas, altura, largura, quantidadePalavras);
 }
 
 
