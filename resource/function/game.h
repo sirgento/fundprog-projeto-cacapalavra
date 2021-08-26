@@ -1,7 +1,59 @@
 #include <stdio.h>
+/**
+ * @return se uma string TGT contém uma string PARAM
+ * * */
+bool compararStrings(char *tgt, char *param, int length) {
+	String paramCorrigido = "";
+	int k = 0;
+	for (int i = 0; i < length; i++) {
+		/**
+		 * Importante, compara com ponto, espaço e * pra ver se o usuário deixou em branco por engano
+		 * * */
+		if (!charIn(param[i], ". *", 3)) {
+			paramCorrigido[k] = param[i];
+			k++;
+		}
+	}
+	paramCorrigido[k] = 0;
+//	printf("CORRIGIDO: %s\n", paramCorrigido);
+	
+	/**
+	 * String vazia não contém nada
+	 * * */
+	if (k == 0) return false;
+	
+	return (strstr(tgt, paramCorrigido) != NULL);
+}
+
+/**
+ * Vide acima
+ * * */
+void limparString(char *str, int size) {
+	String retorno = "";
+	int k = 0;
+	for (int i = 0; i < size; i++) {
+		if (!charIn(str[i], ". *", 3)) {
+			retorno[k] = str[i];
+			k++;
+		}
+	}
+	retorno[k] = 0;
+	strcpy(str, retorno);
+}
+
+void removerStringEncontrada(char *param, char **tgt, int altura, int largura) {
+	int indexCorreto = 0;
+	for (int i = 0; i < altura; i++) {
+		if (compararStrings(tgt[i], param, largura)) {
+			indexCorreto = i;
+			break;
+		}
+	}
+	strcpy(tgt[indexCorreto], " ");
+}
 
 void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, int qtdPalavras) {
-	printf("Jogando\n");
+	printf("\nJogando!\n\n");
 	const int tamanhoCorrigido = (2 * largura) + 1;
 	/**
 	 * A matriz de entrada já vai ter sido corrigida
@@ -40,28 +92,85 @@ void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, 
 //		for (int x = 0; x < altura; x++)
 //			printf("%s\n", matrizEntrada[x]);
 
+		bool achouHorizontal = false;
+		char stringParaCompararH[] = "";
 		/**
 		 * Percorre a matriz horizontalmente
 		 * * */
 		for (int i = 0; i < altura; i++) {
-			for (int j = 0; j < largura; j++) {
-				printf("%c", matrizEntrada[i][j]);
+			strcpy(stringParaCompararH, matrizEntrada[i]);
+			stringParaCompararH[largura] = 0;
+			printf("%s\n", stringParaCompararH);
+			int contagemLetras = 0;
+			for (int n = 0; n < largura; n++) {
+				if (!charIn(stringParaCompararH[n], ". *", 3))
+				contagemLetras++;
 			}
-			printf("\n");
+			if (contagemLetras < 2) break;
+			if (compararStrings(desafio[i], stringParaCompararH, largura)) {
+				limparString(stringParaCompararH, largura);
+				printf("Parabéns! Você achou a palavra %s!\n", stringParaCompararH);
+				removerStringEncontrada(stringParaCompararH, palavras, altura, largura);
+				achouHorizontal = true; 
+				qtdPalavras--;
+				break;
+			}
+//			printf("\n");
 		}
-
-		/**
-		 * Percorre a matriz verticalmente
+		/** TODO ajustar as matriz como char array[altura]
+		 * Comparação vertical é feita mediante condição, pois é mais intenso o requisito de processamento
+		 * 100% sincero, não joguei isso pra uma função separada por um misto de "em cima da hora" e "preguiça"
 		 * * */
-		for (int i = 0; i < largura; i++) {
-			for (int j = 0; j < altura; j++) {
-				printf("%c", matrizEntrada[j][i]);
+		if (!achouHorizontal) {
+			char stringParaCompararV[] = "";
+			char matrizInversa[largura][altura];
+			char desafioInversa[largura][altura];
+			/**
+			 * Inverte as matrizes
+			 * * */
+			for (int j = 0; j < largura; j++) {
+				for (int i = 0; i <= altura; i++) {
+					if (i == altura) {
+						matrizInversa[j][i] = 0;
+						desafioInversa[j][i] = 0;
+					} else {
+						matrizInversa[j][i] = matrizEntrada[i][j];
+						desafioInversa[j][i] = desafio[i][j];
+					}
+				}
 			}
-			printf("\n");
+			for (int i = 0; i < largura; i++) {
+				matrizInversa[i][altura] = 0;
+				desafioInversa[i][altura] = 0;
+			}
+			for (int i = 0; i < largura; i++) {
+				printf("%s\n", matrizInversa[i]);
+			}
+			for (int i = 0; i < largura; i++) {
+				printf("%s\n", desafioInversa[i]);
+			}
+			for (int i = 0; i < largura; i++) {
+				strcpy(stringParaCompararV, matrizEntrada[i]);
+				stringParaCompararV[altura] = 0;
+				printf("%s\n", stringParaCompararV);
+				int contagemLetras = 0;
+				for (int n = 0; n < altura; n++) {
+					if (!charIn(stringParaCompararV[n], ". *", 3))
+					contagemLetras++;
+				}
+				if (contagemLetras < 2) break;
+				if (compararStrings(desafioInversa[i], stringParaCompararV, altura)) {
+					limparString(stringParaCompararV, altura);
+					printf("Parabéns! Você achou a palavra %s!\n", stringParaCompararV);
+					removerStringEncontrada(stringParaCompararV, palavras, altura, largura);
+					qtdPalavras--;
+					break;
+				}
+			}
+//				printf("\n");
 		}
-		break;
-//		printf("Palavras: %d\n", qtdPalavras);
-		qtdPalavras--;
+//		break;
+		printf("Palavras restantes: %d\n", qtdPalavras);
 	} while (qtdPalavras > 0);
 	
 }
