@@ -128,17 +128,3 @@ void criarMatrizPalavras(FILE *arq, char **matriz, int quantidade) {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

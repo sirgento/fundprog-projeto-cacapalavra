@@ -160,6 +160,7 @@ void jogar(FILE *out, char **desafio, char **palavras, int altura, int largura, 
 		}
 //		break;
 		printf("Palavras restantes: %d\n", qtdPalavras);
+		fprintf(out, "Palavras restantes: %d\n", qtdPalavras);
 	} while (qtdPalavras > 0);
 	printf("\nParabéns! Você venceu!\n");
 }

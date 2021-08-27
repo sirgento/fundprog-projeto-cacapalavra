@@ -152,13 +152,13 @@ void doGame(String input, String output) {
 
 	criarMatrizPalavras(iFile, palavrasValidas, quantidadePalavras);
 	
+	fclose(iFile);
+	
 	printf("\nFormatos de entrada válidos(exemplos):\n");
 	printf("\n* * * * *   * * *\n* P R G *   * P *\n* * * * *   * R *\n");
 	printf("            * G *\n            * * *\n\n");
 	
 	jogar(oFile, matriz, palavrasValidas, altura, largura, quantidadePalavras);
+	fclose(oFile);
 }
-
-
-
 
